@@ -1,11 +1,14 @@
-# Use official Tomcat image as the base
+# Use Tomcat 10.0.10 as the base image
 FROM tomcat:10.0.10
 
-# Correct path: Copy WAR file to Tomcat webapps directory
-COPY target/Weather.war /usr/local/tomcat/webapps/Weather.war
+# Set the working directory inside the container
+WORKDIR /usr/local/tomcat/webapps/
 
-# Expose port 8080 (Tomcat default port)
+# Copy the WAR file from src/main/webapp to Tomcat's webapps directory
+COPY src/main/webapp/Weather.war /usr/local/tomcat/webapps/Weather.war
+
+# Expose port 8080 for the application
 EXPOSE 8080
 
-# Start Tomcat server
+# Start Tomcat when the container launches
 CMD ["catalina.sh", "run"]
